@@ -65,6 +65,7 @@ const TodoList = () => {
         if (text) {
             const obj = { label: text, done: false }
             let auxList = ([...task, obj])
+            console.log(auxList)
             setTask([...task, obj])
             console.log(task)
             setText("")
@@ -87,7 +88,7 @@ const TodoList = () => {
 
         }
     }
-    
+    console.log(task)
     const deleteTask = (index) => {
         const newTask = task.filter((element, position) => position != index)
         setTask(newTask)
