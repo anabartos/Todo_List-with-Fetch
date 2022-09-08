@@ -14,28 +14,7 @@ const TodoList = () => {
     const handleText = (event) => {
         setText(event.target.value)
     }
-
-    const createUser = () => {
-        fetch(url, {
-            method: "POST",
-            body: JSON.stringify([{label:"test", done:false}]),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-            .then(response => {
-                if (!response.ok)
-                    throw new Error("usuario no existe")
-                return response.json()
-            })
-            .then(response => getTask())
-            .catch(error => {
-                console.log(error)
-                
-            })
-        
-
-    }
+    
     const getTask = () => {
 
         fetch(url, {
@@ -88,12 +67,11 @@ const TodoList = () => {
 
         }
     }
-    console.log(task)
     const deleteTask = (index) => {
         const newTask = task.filter((element, position) => position != index)
         setTask(newTask)
         fetch(url, {
-            method: "PUT",
+            method: "DELETE",
             body: JSON.stringify(task),
             headers: {
                 "Content-Type": "application/json"
@@ -116,6 +94,7 @@ const TodoList = () => {
         
         fetch(url, {
             method: "DELETE",
+            body: JSON.stringify(task),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -124,9 +103,8 @@ const TodoList = () => {
                 return resp.json();
             })
             .then(data => {
-                createUser()
-
-                console.log(data); //esto imprimirá en la consola el objeto exacto recibido del servidor
+            setTask([])
+                console.log(data.result); //esto imprimirá en la consola el objeto exacto recibido del servidor
             })
             .catch(error => {
                 //manejo de errores
